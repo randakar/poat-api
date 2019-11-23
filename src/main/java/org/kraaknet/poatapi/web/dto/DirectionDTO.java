@@ -16,11 +16,11 @@ package org.kraaknet.poatapi.web.dto;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.ToString;
 
-@Slf4j
 @Getter
 @RequiredArgsConstructor
+@ToString
 public enum DirectionDTO {
 
     GIVEN("GIVEN"),

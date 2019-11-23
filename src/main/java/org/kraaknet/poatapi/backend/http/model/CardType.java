@@ -16,10 +16,10 @@ package org.kraaknet.poatapi.backend.http.model;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.ToString;
 
-@Slf4j
 @Getter
+@ToString
 @RequiredArgsConstructor
 public enum CardType {
 
