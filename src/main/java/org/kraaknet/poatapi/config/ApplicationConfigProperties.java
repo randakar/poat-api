@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.net.URI;
-
 /**
  * Store application properties in one place.
  */
