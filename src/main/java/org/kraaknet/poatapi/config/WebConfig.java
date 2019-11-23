@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Configuration
@@ -40,6 +41,19 @@ public class WebConfig {
                 .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .featuresToEnable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
                 .build();
+    }
+
+    /**
+     * Configure a RestTemplate
+     *
+     * This is used to talk to backends. Normally I'd expect to configure some kind of authentication scheme here,
+     * by instantiating a Oath2RestTemplate, a KeycloakRestTemplate, or something like that.
+     *
+     * @return The basic rest template bean.
+     */
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
