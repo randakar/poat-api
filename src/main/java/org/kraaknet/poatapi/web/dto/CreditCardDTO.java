@@ -32,9 +32,9 @@ public class CreditCardDTO {
 
   @NonNull
   private String cardHolder;
-  
+
   @NonNull
-  private Integer monhtlyLimit ;
+  private Integer monthlyLimit;
 
 }
 
