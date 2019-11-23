@@ -21,7 +21,7 @@ public class ApplicationConfigProperties {
     @Value("${poat.backend.port:8080}")
     private String backendPort;
 
-    @Value("server.servlet.context-path:/poat")
+    @Value("${server.servlet.context-path:/poat}")
     private String contextRoot;
 
 }
