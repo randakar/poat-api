@@ -24,6 +24,7 @@
 
         <!-- Test dependencies -->
         <rest-assured.version>3.2.0</rest-assured.version>
+        <wiremock.version>2.24.1</wiremock.version>
     </properties>
 
     <dependencies>
@@ -84,6 +85,13 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
             <scope>test</scope>
         </dependency>
 
