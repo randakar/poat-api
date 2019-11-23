@@ -1,0 +1,11 @@
+<configuration>
+    <mavenLike>true</mavenLike>
+    <autoIncrementPatch>false</autoIncrementPatch>
+    <useCommitDistance>true</useCommitDistance>
+    <useDirty>false</useDirty>
+    <useGitCommitId>false</useGitCommitId>
+    <gitCommitIdLength>12</gitCommitIdLength>  <!-- between [8,40] -->
+    <nonQualifierBranches>master</nonQualifierBranches> <!-- comma separated, example "master,integration" -->
+    <regexVersionTag>^version\/(.+)$</regexVersionTag>  <!-- a java regular expression with a capture group matching the version numbers in our tags under version/ -->
+    <useDefaultBranchingPolicy>true</useDefaultBranchingPolicy>   <!-- uses jgitver#BranchingPolicy#DEFAULT_FALLBACK as fallback branch policy-->
+</configuration>
