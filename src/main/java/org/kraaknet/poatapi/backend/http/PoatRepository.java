@@ -17,11 +17,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-
-import static java.lang.String.format;
 
 @Slf4j
 @Component
