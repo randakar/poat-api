@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("integrationtest")
 @Configuration
 @ComponentScan(basePackages = {"org.kraaknet.poatapi"})
 @EnableAutoConfiguration
