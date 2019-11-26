@@ -20,7 +20,7 @@ public class PowerOfAttorneyDTO {
     private String grantee;
 
     @NonNull
-    private String account;
+    private AccountDTO account;
 
     @NonNull
     private DirectionDTO direction;

@@ -4,14 +4,18 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kraaknet.poatapi.backend.http.PoatRepository;
-import org.kraaknet.poatapi.backend.http.model.*;
-import org.kraaknet.poatapi.service.mappers.*;
-import org.kraaknet.poatapi.web.dto.CardDTO;
+import org.kraaknet.poatapi.backend.http.model.PowerOfAttorney;
+import org.kraaknet.poatapi.backend.http.model.PowerOfAttorneyReference;
+import org.kraaknet.poatapi.service.mappers.AuthorizationMapper;
+import org.kraaknet.poatapi.service.mappers.DirectionMapper;
+import org.kraaknet.poatapi.service.mappers.PowerOfAttorneyReferenceMapper;
+import org.kraaknet.poatapi.web.dto.AccountDTO;
 import org.kraaknet.poatapi.web.dto.PowerOfAttorneyDTO;
 import org.kraaknet.poatapi.web.dto.PowerOfAttorneyReferenceDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -25,6 +29,12 @@ public class PoatService {
     private final PoatRepository repository;
 
     @NonNull
+    private final CardService cardService;
+
+    @NonNull
+    private final AccountService accountService;
+
+    @NonNull
     private final PowerOfAttorneyReferenceMapper mapper;
 
     @NonNull
@@ -33,11 +43,6 @@ public class PoatService {
     @NonNull
     private final DirectionMapper directionMapper;
 
-    @NonNull
-    private final CreditCardMapper creditCardMapper;
-
-    @NonNull
-    private final DebitCardMapper debitCardMapper;
 
     public List<PowerOfAttorneyReferenceDTO> getAllPowerOfAttorneyReferences() {
         Set<PowerOfAttorneyReference> references = repository.getAllPowerOfAttorneyReferences();
@@ -59,41 +64,31 @@ public class PoatService {
         log.debug("List of actual powers: {}", powers);
 
         List<PowerOfAttorneyDTO> result = powers.stream()
-                .map(power -> PowerOfAttorneyDTO.builder()
-                        .id(power.getId())
-                        .grantee(power.getGrantee())
-                        .grantor(power.getGrantor())
-                        .account(power.getAccount())
-                        .authorizations(authorizationMapper.toDTOs(power.getAuthorizations()))
-                        .direction(directionMapper.toDTO(power.getDirection()))
-                        .cards(lookupCards(power.getCards()))
-                        .build())
+                .map(this::createPowerOfAttorney)
+                .flatMap(Optional::stream)
                 .collect(toList());
 
         log.debug("Result: {}", result);
         return result;
     }
 
-    private List<CardDTO> lookupCards(List<CardReference> cards) {
-        return cards.stream()
-                .map(this::lookupCard)
-                .filter(card -> CardStatus.ACTIVE.equals(card.getStatus()))
-                .collect(toList());
-    }
-
-    private CardDTO lookupCard(CardReference cardReference) {
-        CardType type = cardReference.getType();
-        long id = Long.parseLong(cardReference.getId());
-
-        // This would be an ideal place for a switch expression.
-        if (type == CardType.CREDIT_CARD) {
-            CreditCard creditCard = repository.getCreditCard(id);
-            return creditCardMapper.toDTO(creditCard);
-        } else if (type == CardType.DEBIT_CARD) {
-            DebitCard debitCard = repository.getDebitCard(id);
-            return debitCardMapper.toDTO(debitCard);
+    private Optional<PowerOfAttorneyDTO> createPowerOfAttorney(PowerOfAttorney power) {
+        Optional<AccountDTO> accountOptional = accountService.findAccount(power.getAccount());
+        if (accountOptional.isEmpty()) {
+            return Optional.empty();
         }
-        throw new IllegalStateException("Unknown card type");
+
+        AccountDTO account = accountOptional.get();
+        return Optional.of(PowerOfAttorneyDTO.builder()
+                .id(power.getId())
+                .grantee(power.getGrantee())
+                .grantor(power.getGrantor())
+                .account(account)
+                .authorizations(authorizationMapper.toDTOs(power.getAuthorizations()))
+                .direction(directionMapper.toDTO(power.getDirection()))
+                .cards(cardService.lookupCards(power.getCards()))
+                .build());
     }
+
 
 }
