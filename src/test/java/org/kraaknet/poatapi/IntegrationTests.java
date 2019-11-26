@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kraaknet.poatapi.backend.http.model.PowerOfAttorneyReference;
 import org.kraaknet.poatapi.integration.RestAssuredConfigurer;
-import org.kraaknet.poatapi.web.dto.PowerOfAttorneyReferenceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,9 +18,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 @Slf4j
@@ -53,10 +57,10 @@ public class IntegrationTests {
     @Test
     public void whenRequestingAllThePowerGetAllThePowers() {
 
-        ParameterizedTypeReference<List<PowerOfAttorneyReferenceDTO>> typeReference = new ParameterizedTypeReference<>() {
+        ParameterizedTypeReference<Set<PowerOfAttorneyReference>> typeReference = new ParameterizedTypeReference<>() {
         };
 
-        List<PowerOfAttorneyReferenceDTO> response = given()
+        Set<PowerOfAttorneyReference> response = given()
                 .when()
                 .get("/power-of-attorney/")
                 .then()
@@ -65,7 +69,12 @@ public class IntegrationTests {
                 .extract().body().as(typeReference.getType());
 
         log.debug("Response: {}", response);
-
+        Set<PowerOfAttorneyReference> expectedResponse = IntStream.rangeClosed(1, 4).boxed()
+                .map(i -> PowerOfAttorneyReference.builder()
+                        .id(format("%04d", i))
+                        .build())
+                .collect(Collectors.toSet());
+        assertEquals(expectedResponse, response);
     }
 
 }
