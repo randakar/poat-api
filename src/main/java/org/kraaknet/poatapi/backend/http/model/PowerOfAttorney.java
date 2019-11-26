@@ -38,6 +38,17 @@ public class PowerOfAttorney {
     private List<CardReference> cards = Collections.emptyList();
 
 
+    /**
+     * Users have access if they are listed as grantee or as grantor
+     *
+     * @param userName the name of the user
+     * @return whether the user has access
+     */
+    public boolean userHasAccess(String userName) {
+        return userName.equalsIgnoreCase(grantee) || userName.equalsIgnoreCase(grantor);
+    }
+
+
     @JsonPOJOBuilder(withPrefix = "")
     public static final class PowerOfAttorneyBuilder {
     }

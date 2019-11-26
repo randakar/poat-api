@@ -46,7 +46,7 @@ public class PoatService {
                 .collect(toList());
     }
 
-    public List<PowerOfAttorneyDTO> getPowerOfAttorneyView() {
+    public List<PowerOfAttorneyDTO> getPowerOfAttorneyView(String userName) {
         Set<PowerOfAttorneyReference> references = repository.getAllPowerOfAttorneyReferences();
         log.debug("List of references: {}", references);
 
@@ -54,6 +54,7 @@ public class PoatService {
                 .map(PowerOfAttorneyReference::getId)
                 .map(Long::valueOf)
                 .map(repository::getPowerOfAttorney)
+                .filter(power -> power.userHasAccess(userName))
                 .collect(toList());
         log.debug("List of actual powers: {}", powers);
 

@@ -32,7 +32,7 @@ public class PoatController {
     @GetMapping("view")
     public List<PowerOfAttorneyDTO> getPowerOfAttorneyView(Principal principal) {
         log.debug("getPowerOfAttorneyView({})", principal);
-        return service.getPowerOfAttorneyView();
+        return service.getPowerOfAttorneyView(principal.getName());
     }
 
 
