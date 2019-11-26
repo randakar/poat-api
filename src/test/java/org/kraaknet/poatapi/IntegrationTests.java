@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kraaknet.poatapi.backend.http.model.PowerOfAttorneyReference;
 import org.kraaknet.poatapi.integration.RestAssuredConfigurer;
+import org.kraaknet.poatapi.web.dto.PowerOfAttorneyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -62,7 +62,7 @@ public class IntegrationTests {
 
         Set<PowerOfAttorneyReference> response = given()
                 .when()
-                .get("/power-of-attorney/")
+                .get("/power-of-attorney/reference")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .contentType(ContentType.JSON)
@@ -77,4 +77,20 @@ public class IntegrationTests {
         assertEquals(expectedResponse, response);
     }
 
+    @Test
+    public void whenRequestingTheAggregatedViewGetAnAggregatedView() {
+        ParameterizedTypeReference<Set<PowerOfAttorneyDTO>> typeReference = new ParameterizedTypeReference<>() {
+        };
+
+        Set<PowerOfAttorneyDTO> response = given()
+                .when()
+                .get("/power-of-attorney/view")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .contentType(ContentType.JSON)
+                .extract().body().as(typeReference.getType());
+
+        log.debug("Response: {}", response);
+
+    }
 }
