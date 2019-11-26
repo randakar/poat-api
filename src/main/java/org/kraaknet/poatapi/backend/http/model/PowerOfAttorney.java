@@ -1,13 +1,17 @@
 package org.kraaknet.poatapi.backend.http.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Collections;
 import java.util.List;
 
 @Value
 @Builder
+@JsonDeserialize(builder = PowerOfAttorney.PowerOfAttorneyBuilder.class)
 public class PowerOfAttorney {
 
     @NonNull
@@ -26,10 +30,17 @@ public class PowerOfAttorney {
     private Direction direction;
 
     @NonNull
-    private List<Authorization> authorizations;
+    @Builder.Default
+    private List<Authorization> authorizations = Collections.emptyList();
 
     @NonNull
-    private List<CardReference> cards;
+    @Builder.Default
+    private List<CardReference> cards = Collections.emptyList();
+
+
+    @JsonPOJOBuilder(withPrefix = "")
+    public static final class PowerOfAttorneyBuilder {
+    }
 
 }
 
