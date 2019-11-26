@@ -1,4 +1,4 @@
-package org.kraaknet.poatapi.config;
+package org.kraaknet.poatapi.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;

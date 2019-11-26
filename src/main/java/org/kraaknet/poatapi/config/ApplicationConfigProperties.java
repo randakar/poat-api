@@ -24,10 +24,6 @@ public class ApplicationConfigProperties {
     @Value("${server.servlet.context-path:/poat}")
     private String contextRoot;
 
-
-    @Value("${poat.user.name:user}")
-    private String username;
-
     @Value("${poat.user.password:pwd}")
     private String userPassword;
 

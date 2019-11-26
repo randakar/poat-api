@@ -2,19 +2,22 @@ package org.kraaknet.poatapi.config;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.kraaknet.poatapi.security.CustomBasicAuthenticationEntryPoint;
+import org.kraaknet.poatapi.security.PoorMansUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.servlet.*;
-import java.io.IOException;
+import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,11 +36,16 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(properties.getUsername())
-                .password(passwordEncoder().encode(properties.getUserPassword()))
-                .authorities("ROLE_USER");
+        configureGlobalSecurity(auth);
     }
+
+    @Autowired
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(authenticationProvider());
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,6 +65,19 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new PoorMansUserDetailsService(properties, passwordEncoder());
     }
 
 }
