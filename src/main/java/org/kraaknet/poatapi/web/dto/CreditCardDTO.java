@@ -34,7 +34,7 @@ public class CreditCardDTO {
   private String cardHolder;
 
   @NonNull
-  private Integer monthlyLimit;
+  private LimitDTO limit;
 
 }
 
