@@ -15,6 +15,9 @@ public class DebitCard {
     private Integer cardNumber;
 
     @NonNull
+    private CardStatus status;
+
+    @NonNull
     private Integer sequenceNumber;
 
     @NonNull

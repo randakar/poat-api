@@ -77,6 +77,7 @@ public class PoatService {
     private List<CardDTO> lookupCards(List<CardReference> cards) {
         return cards.stream()
                 .map(this::lookupCard)
+                .filter(card -> CardStatus.ACTIVE.equals(card.getStatus()))
                 .collect(toList());
     }
 
