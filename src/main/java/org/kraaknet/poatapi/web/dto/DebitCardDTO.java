@@ -13,25 +13,14 @@
 
 package org.kraaknet.poatapi.web.dto;
 
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Value
-@Builder
-public class DebitCardDTO {
-
-    @NonNull
-    private String id;
-
-    @NonNull
-    private Integer cardNumber;
-
-    @NonNull
-    private Integer sequenceNumber;
-
-    @NonNull
-    private String cardHolder;
+@Getter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class DebitCardDTO extends CardDTO {
 
     @NonNull
     private LimitDTO atmLimit;
