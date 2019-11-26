@@ -42,7 +42,7 @@ public class PoatRepository {
     public Set<PowerOfAttorneyReference> getAllPowerOfAttorneyReferences() {
         try {
             String url = createBaseUriBuilder()
-                    .pathSegment("/power-of-attorneys")
+                    .pathSegment("power-of-attorneys")
                     .build(true).toUriString();
 
             ParameterizedTypeReference<Set<PowerOfAttorneyReference>> reference = new ParameterizedTypeReference<>() {
