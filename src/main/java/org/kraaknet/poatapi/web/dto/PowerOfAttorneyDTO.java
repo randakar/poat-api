@@ -42,7 +42,7 @@ public class PowerOfAttorneyDTO {
     private List<AuthorizationDTO> authorizations;
 
     @NonNull
-    private List<CardReferenceDTO> cards;
+    private List<CardDTO> cards;
 
 }
 
