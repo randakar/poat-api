@@ -20,8 +20,6 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class RestAssuredConfigurer {
 
-    private static final String DEFAULT_USER = "test_user";
-
     @NonNull
     @Qualifier("objectMapper")
     private final ObjectMapper mapper;
@@ -41,17 +39,9 @@ public class RestAssuredConfigurer {
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .build();
-
-        String token = login(DEFAULT_USER);
-
-        // Note: The order here matters a lot. When Restassured.config is set it overwrites the authentication config,
+        // Note: The order here matters a lot. When RestAssured.config is set it overwrites the authentication config,
         // so this needs to happen in this exact order.
-        RestAssured.authentication = RestAssured.oauth2(token);
-    }
-
-    private String login(String userName) {
-        log.debug("Authentication not implemented.");
-        return userName;
+        RestAssured.authentication = RestAssured.basic(properties.getUsername(), properties.getUserPassword());
     }
 
 }
