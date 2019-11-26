@@ -9,14 +9,14 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString
 public enum AuthorizationDTO {
-  
-  DEBIT_CARD("DEBIT_CARD"),
-  CREDIT_CARD("CREDIT_CARD"),
-  VIEW("VIEW"),
-  PAYMENT("PAYMENT");
 
-  @NonNull
-  private final String value;
-  
+    DEBIT_CARD("DEBIT_CARD"),
+    CREDIT_CARD("CREDIT_CARD"),
+    VIEW("VIEW"),
+    PAYMENT("PAYMENT");
+
+    @NonNull
+    private final String value;
+
 }
 

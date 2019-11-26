@@ -10,10 +10,10 @@ import lombok.Value;
 @RequiredArgsConstructor
 public class CardReference {
 
-  @NonNull
-  private final String id;
+    @NonNull
+    private final String id;
 
-  @NonNull
-  private final CardType type;
+    @NonNull
+    private final CardType type;
 }
 

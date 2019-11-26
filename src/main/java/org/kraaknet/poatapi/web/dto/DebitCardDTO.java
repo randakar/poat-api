@@ -1,6 +1,9 @@
 package org.kraaknet.poatapi.web.dto;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter

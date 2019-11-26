@@ -6,7 +6,7 @@ import lombok.Value;
 
 /**
  * Basic message object for HTTP status code response messages.
- *
+ * <p>
  * This could be internationalized by doing message lookups in translation tables,
  * but that is not implemented right now.
  */

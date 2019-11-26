@@ -45,7 +45,7 @@ public class WebConfig {
 
     /**
      * Configure a RestTemplate
-     *
+     * <p>
      * This is used to talk to backends. Normally I'd expect to configure some kind of authentication scheme here,
      * by instantiating a Oath2RestTemplate, a KeycloakRestTemplate, or something like that.
      *
