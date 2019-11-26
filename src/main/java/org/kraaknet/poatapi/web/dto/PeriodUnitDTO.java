@@ -23,9 +23,9 @@ import lombok.ToString;
 @ToString
 public enum PeriodUnitDTO {
 
-    DAY("PER_DAY"),
-    WEEK("PER_WEEK"),
-    MONTH("PER_MONTH");
+    PER_DAY("PER_DAY"),
+    PER_WEEK("PER_WEEK"),
+    PER_MONTH("PER_MONTH");
 
     @NonNull
     private final String value;

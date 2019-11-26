@@ -12,7 +12,7 @@ public class CardDTO {
     private final String id;
 
     @NonNull
-    private CardTypeDTO type;
+    private final CardTypeDTO type;
 
     @NonNull
     private final Integer cardNumber;

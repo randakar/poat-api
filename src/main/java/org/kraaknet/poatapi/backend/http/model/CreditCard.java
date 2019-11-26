@@ -8,24 +8,20 @@ import lombok.Value;
 @Builder
 public class CreditCard {
 
-  @NonNull
-  private String id;
+    @NonNull
+    private String id;
 
-  @NonNull
-  private Integer cardNumber;
+    @NonNull
+    private Integer cardNumber;
 
-  @NonNull
-  private Integer sequenceNumber;
+    @NonNull
+    private Integer sequenceNumber;
 
-  @NonNull
-  private String cardHolder;
+    @NonNull
+    private String cardHolder;
 
-  /**
-   * Some interesting typos in the swagger documentation for this one.
-   * Let's see what is *actually* in there..
-   */
-  @NonNull
-  private Integer monhtlyLimit ;
+    @NonNull
+    private Integer monthlyLimit;
 
 }
 

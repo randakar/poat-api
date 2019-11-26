@@ -7,8 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PowerOfAttorneyReferenceMapper {
 
-    PowerOfAttorneyReferenceDTO sourceToDestination(PowerOfAttorneyReference dto);
-
-    PowerOfAttorneyReference destinationToSource(PowerOfAttorneyReferenceDTO dto);
-
+    PowerOfAttorneyReferenceDTO toDTO(PowerOfAttorneyReference reference);
 }
